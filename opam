@@ -1,13 +1,13 @@
 opam-version: "1.2"
 name: "bits"
-version: "0.1"
+version: "%%VERSION_NUM%%"
 maintainer: "Vasil Diadov <vasil.s.d@gmail.com>"
 authors: ["Vasil Diadov <vasil.s.d@gmail.com>"]
-homepage: "https://github.com/vasil-sd/bits"
-doc: "https://vasil-sd.github.io/bits/doc"
+homepage: "https://github.com/vasil-sd/ocaml-bits"
+doc: "https://vasil-sd.github.io/ocaml-bits/doc"
 license: "ISC"
-dev-repo: "https://github.com/vasil-sd/bits.git"
-bug-reports: "https://github.com/vasil-sd/bits/issues"
+dev-repo: "https://github.com/vasil-sd/ocaml-bits.git"
+bug-reports: "https://github.com/vasil-sd/ocaml-bits/issues"
 tags: []
 available: [ ocaml-version >= "4.01.0"]
 depends:
