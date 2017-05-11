@@ -25,7 +25,7 @@ The documentation and API reference is generated from the source
 interfaces. It can be consulted [online][doc] or via `odig doc
 bits`.
 
-[doc]: https://vasil-sd.github.io/bits/doc
+[doc]: https://vasil-sd.github.io/ocaml-bits/doc
 
 ## Sample programs
 
