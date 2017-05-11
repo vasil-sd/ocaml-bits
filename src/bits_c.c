@@ -4,7 +4,12 @@
    %%NAME%% %%VERSION%%
   ---------------------------------------------------------------------------*/
 
-#include <bits.h>
+#include <caml/alloc.h>
+#include <caml/callback.h>
+#include <caml/fail.h>
+#include <caml/memory.h>
+#include <caml/misc.h>
+#include <caml/mlvalues.h>
 
 CAMLprim value cprim_bits_get_exn(value bits, value bito) {
   // {length : int; data : bytes}
@@ -446,4 +451,3 @@ CAMLprim value cprim_bits_rindex(value b, value v) {
    ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
   ---------------------------------------------------------------------------*/
-

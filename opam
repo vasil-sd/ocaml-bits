@@ -1,4 +1,6 @@
 opam-version: "1.2"
+description: "Library for manipulating bits vectors."
+version: "0.1"
 maintainer: "Vasil Diadov <vasil.s.d@gmail.com>"
 authors: ["Vasil Diadov <vasil.s.d@gmail.com>"]
 homepage: "https://github.com/vasil-sd/bits"
@@ -18,5 +20,5 @@ depopts: []
 build:
 [[
   "ocaml" "pkg/pkg.ml" "build"
-          "--dev-pkg" "%{dev}%"
+          "--dev-pkg" "%{pinned}%"
 ]]

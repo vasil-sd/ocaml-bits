@@ -14,6 +14,7 @@
 #include <caml/misc.h>
 #include <caml/mlvalues.h>
 
+/*
 extern CAMLprim value cprim_bits_get_exn(value, value);
 extern CAMLprim value cprim_bits_set_exn(value, value, value);
 extern CAMLprim value cprim_bits_op(value, value, value);
@@ -26,6 +27,7 @@ extern CAMLprim value cprim_bits_for_all_values_exn(value, value, value);
 extern CAMLprim value cprim_bits_exists_for_values_exn(value, value, value);
 extern CAMLprim value cprim_bits_index(value, value);
 extern CAMLprim value cprim_bits_rindex(value, value);
+*/
 
 #endif
 
