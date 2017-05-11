@@ -1,6 +1,5 @@
 opam-version: "1.2"
 name: "bits"
-version: "%%VERSION_NUM%%"
 maintainer: "Vasil Diadov <vasil.s.d@gmail.com>"
 authors: ["Vasil Diadov <vasil.s.d@gmail.com>"]
 homepage: "https://github.com/vasil-sd/ocaml-bits"
