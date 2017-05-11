@@ -2,17 +2,19 @@ bits — Library for manipulating of bit vectors
 -------------------------------------------------------------------------------
 %%VERSION%%
 
-bits is TODO
+Bits is module for manipulating bit vectors.
+Basic primitives are moved to C code for speed.
 
-bits is distributed under the ISC license.
+Bits is distributed under the ISC license.
 
-Homepage: https://github.com/vasil-sd/bits  
+Homepage: https://github.com/vasil-sd/ocaml-bits
 
 ## Installation
 
-bits can be installed with `opam`:
+Bits can be installed with `opam`:
 
-    opam install bits
+    git clone https://github.com/vasil-sd/ocaml-bits.git
+    opam pin add bits ocaml-bits
 
 If you don't use `opam` consult the [`opam`](opam) file for build
 instructions.
