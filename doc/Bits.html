@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Bits" rel="Chapter" href="Bits.html"><link title="Bits" rel="Section" href="#1_Bits">
+<title>Bits</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Bits.html">Bits</a></h1>
+
+<pre><span class="keyword">module</span> Bits: <code class="code"><span class="keyword">sig</span></code> <a href="Bits.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+Library for manipulating of bit vectors
+<p>
+
+    <em>0.2-2-g4aa6342 — <a href="https://github.com/vasil-sd/ocaml-bits ">homepage</a></em><br>
+</div>
+<hr width="100%">
+<br>
+<h1 id="1_Bits">Bits</h1><br>
+
+<pre><span id="TYPEbits"><span class="keyword">type</span> <code class="type"></code>bits</span> </pre>
+
+
+<pre><span id="VALlength"><span class="keyword">val</span> length</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> int</code></pre>
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> int -> bool</code></pre>
+<pre><span id="VALset"><span class="keyword">val</span> set</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> int -> bool -> unit</code></pre>
+<pre><span id="VALcreate"><span class="keyword">val</span> create</span> : <code class="type">int -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALmake"><span class="keyword">val</span> make</span> : <code class="type">int -> bool -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALinit"><span class="keyword">val</span> init</span> : <code class="type">int -> (int -> bool) -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALcopy"><span class="keyword">val</span> copy</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALof_string"><span class="keyword">val</span> of_string</span> : <code class="type">string -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALto_string"><span class="keyword">val</span> to_string</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> string</code></pre>
+<pre><span id="VALiteri"><span class="keyword">val</span> iteri</span> : <code class="type">(int -> bool -> unit) -> <a href="Bits.html#TYPEbits">bits</a> -> unit</code></pre>
+<pre><span id="VALiteri_on_val"><span class="keyword">val</span> iteri_on_val</span> : <code class="type">(int -> unit) -> <a href="Bits.html#TYPEbits">bits</a> -> bool -> unit</code></pre>
+<pre><span id="VALmapi_inplace"><span class="keyword">val</span> mapi_inplace</span> : <code class="type">(int -> bool -> bool) -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALmapi_on_val_inplace"><span class="keyword">val</span> mapi_on_val_inplace</span> : <code class="type">(int -> bool) -> <a href="Bits.html#TYPEbits">bits</a> -> bool -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALcount_val"><span class="keyword">val</span> count_val</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> bool -> int</code></pre>
+<pre><span id="VALmapi"><span class="keyword">val</span> mapi</span> : <code class="type">(int -> bool -> bool) -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALmapi_on_val"><span class="keyword">val</span> mapi_on_val</span> : <code class="type">(int -> bool) -> <a href="Bits.html#TYPEbits">bits</a> -> bool -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALiter"><span class="keyword">val</span> iter</span> : <code class="type">(bool -> unit) -> <a href="Bits.html#TYPEbits">bits</a> -> unit</code></pre>
+<pre><span id="VALmap"><span class="keyword">val</span> map</span> : <code class="type">(bool -> bool) -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALindex_no_exn"><span class="keyword">val</span> index_no_exn</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> bool -> int</code></pre>
+<pre><span id="VALrindex_no_exn"><span class="keyword">val</span> rindex_no_exn</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> bool -> int</code></pre>
+<pre><span id="VALindex"><span class="keyword">val</span> index</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> bool -> int</code></pre>
+<pre><span id="VALrindex"><span class="keyword">val</span> rindex</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> bool -> int</code></pre>
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = <code class="type"><a href="Bits.html#TYPEbits">bits</a></code> </pre>
+
+
+<pre><span id="VALequal"><span class="keyword">val</span> equal</span> : <code class="type"><a href="Bits.html#TYPEt">t</a> -> <a href="Bits.html#TYPEt">t</a> -> bool</code></pre>
+<pre><span id="VALcompare"><span class="keyword">val</span> compare</span> : <code class="type"><a href="Bits.html#TYPEt">t</a> -> <a href="Bits.html#TYPEt">t</a> -> int</code></pre>
+<pre><span id="VALband"><span class="keyword">val</span> band</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALbor"><span class="keyword">val</span> bor</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALbxor"><span class="keyword">val</span> bxor</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALbnot"><span class="keyword">val</span> bnot</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VAL(&.)"><span class="keyword">val</span> (&amp;.)</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VAL(|.)"><span class="keyword">val</span> (|.)</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VAL(^.)"><span class="keyword">val</span> (^.)</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VAL(~.)"><span class="keyword">val</span> (~.)</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALband_inplace"><span class="keyword">val</span> band_inplace</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALbor_inplace"><span class="keyword">val</span> bor_inplace</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALbxor_inplace"><span class="keyword">val</span> bxor_inplace</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALbnot_inplace"><span class="keyword">val</span> bnot_inplace</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VAL(&.!)"><span class="keyword">val</span> (&amp;.!)</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VAL(|.!)"><span class="keyword">val</span> (|.!)</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VAL(^.!)"><span class="keyword">val</span> (^.!)</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VAL(~.!)"><span class="keyword">val</span> (~.!)</span> : <code class="type"><a href="Bits.html#TYPEbits">bits</a> -> <a href="Bits.html#TYPEbits">bits</a></code></pre>
+<pre><span id="VALfor_all_values"><span class="keyword">val</span> for_all_values</span> : <code class="type">(int -> bool) -> <a href="Bits.html#TYPEbits">bits</a> -> bool -> bool</code></pre>
+<pre><span id="VALexists_for_values"><span class="keyword">val</span> exists_for_values</span> : <code class="type">(int -> bool) -> <a href="Bits.html#TYPEbits">bits</a> -> bool -> bool</code></pre></body></html>

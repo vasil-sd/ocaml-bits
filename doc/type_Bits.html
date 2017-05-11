@@ -1,0 +1,69 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Bits" rel="Chapter" href="Bits.html"><title>Bits</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;length&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;get&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;=&nbsp;<span class="string">"cprim_bits_get_exn"</span><br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;set&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit&nbsp;=&nbsp;<span class="string">"cprim_bits_set_exn"</span><br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;create&nbsp;:&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;make&nbsp;:&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;init&nbsp;:&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;copy&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_string&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_string&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;iteri&nbsp;:&nbsp;(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"cprim_bits_iteri_exn"</span><br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;iteri_on_val&nbsp;:&nbsp;(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"cprim_bits_iteri_on_val_exn"</span><br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;mapi_inplace&nbsp;:&nbsp;(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"cprim_bits_mapi_exn"</span><br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;mapi_on_val_inplace&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"cprim_bits_mapi_on_val_exn"</span><br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;count_val&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;=&nbsp;<span class="string">"cprim_bits_count_val"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[@@noalloc]<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mapi&nbsp;:&nbsp;(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mapi_on_val&nbsp;:&nbsp;(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;iter&nbsp;:&nbsp;(bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;map&nbsp;:&nbsp;(bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;index_no_exn&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;=&nbsp;<span class="string">"cprim_bits_index"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[@@noalloc]<br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;rindex_no_exn&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;=&nbsp;<span class="string">"cprim_bits_rindex"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[@@noalloc]<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;index&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rindex&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;equal&nbsp;:&nbsp;<span class="constructor">Bits</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare&nbsp;:&nbsp;<span class="constructor">Bits</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;band&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;bor&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;bxor&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;bnot&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;(&nbsp;&amp;.&nbsp;)&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;(&nbsp;|.&nbsp;)&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;(&nbsp;^.&nbsp;)&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;(&nbsp;<span class="keywordsign">~.</span>&nbsp;)&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;band_inplace&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;bor_inplace&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;bxor_inplace&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;bnot_inplace&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;=&nbsp;<span class="string">"cprim_bits_not"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[@@noalloc]<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;(&nbsp;&amp;.!&nbsp;)&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;(&nbsp;|.!&nbsp;)&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;(&nbsp;^.!&nbsp;)&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;(&nbsp;<span class="keywordsign">~.!</span>&nbsp;)&nbsp;:&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits<br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;for_all_values&nbsp;:&nbsp;(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"cprim_bits_for_all_values_exn"</span><br>
+&nbsp;&nbsp;<span class="keyword">external</span>&nbsp;exists_for_values&nbsp;:&nbsp;(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bits</span>.bits&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"cprim_bits_exists_for_values_exn"</span><br>
+<span class="keyword">end</span></code></body></html>
