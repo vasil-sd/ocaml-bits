@@ -1,0 +1,7 @@
+description = "Library for manipulating of bit vectors"
+version = "%%VERSION_NUM%%"
+requires = ""
+archive(byte) = "bits.cma"
+archive(native) = "bits.cmxa"
+plugin(byte) = "bits.cma"
+plugin(native) = "bits.cmxs"
