@@ -59,16 +59,15 @@ val compare : t -> t -> int
   from Bytes:
 
   val sub : bytes -> int -> int -> bytes
-  val sub_string : bytes -> int -> int -> string
+  --val sub_string : bytes -> int -> int -> string
   val extend : bytes -> int -> int -> bytes
   val fill : bytes -> int -> int -> char -> unit
   val blit : bytes -> int -> bytes -> int -> int -> unit
-  val blit_string : string -> int -> bytes -> int -> int -> unit
+  --val blit_string : string -> int -> bytes -> int -> int -> unit
   val concat : bytes -> bytes list -> bytes
   val cat : bytes -> bytes -> bytes
   val trim : bytes -> bytes
-  val escaped : bytes -> bytes
-  val rindex : bytes -> char -> int
+  --val escaped : bytes -> bytes
   val index_from : bytes -> int -> char -> int
   val rindex_from : bytes -> int -> char -> int
   val contains : bytes -> char -> bool
@@ -85,23 +84,23 @@ val compare : t -> t -> int
   external unsafe_fill : bytes -> int -> int -> char -> unit
     = "caml_fill_bytes" [@@noalloc]
     *)
-val band : bits -> bits -> bits
-val bor : bits -> bits -> bits
-val bxor : bits -> bits -> bits
-val bnot : bits -> bits
-val (&.) : bits -> bits -> bits
-val (|.) : bits -> bits -> bits
-val (^.) : bits -> bits -> bits
-val (~.) : bits -> bits
-  (* inplace operations, first argument will be mutated*)
-val band_inplace : bits -> bits -> bits
-val bor_inplace : bits -> bits -> bits
-val bxor_inplace : bits -> bits -> bits
-external bnot_inplace : bits -> bits = "cprim_bits_not" [@@noalloc]
-val (&.!) : bits -> bits -> bits
-val (|.!) : bits -> bits -> bits
-val (^.!) : bits -> bits -> bits
-val (~.!) : bits -> bits
+
+(** Next bitwise operations will work only on bit vectors of the same length. 
+    Each operation generates new bit vector as result.
+    So arguments are immutable. *)
+
+val ( land ) : bits -> bits -> bits
+val ( lor ) : bits -> bits -> bits
+val ( lxor ) : bits -> bits -> bits
+val lnot : bits -> bits
+
+(** Inplace variants of bitwise operations, first argument will be changed and
+    returned as result. *)
+
+val land_inplace : bits -> bits -> bits
+val lor_inplace : bits -> bits -> bits
+val lxor_inplace : bits -> bits -> bits
+external lnot_inplace : bits -> bits = "cprim_bits_not" [@@noalloc]
 
 external for_all_values : (int -> bool) -> bits -> bool -> bool = "cprim_bits_for_all_values_exn"
 external exists_for_values : (int -> bool) -> bits -> bool -> bool  = "cprim_bits_exists_for_values_exn"
