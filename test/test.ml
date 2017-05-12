@@ -19,3 +19,17 @@
    ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
   ---------------------------------------------------------------------------*)
+
+let open Core.Std in
+  let open Core_bench.Std in
+      Command.run (Bench.make_command [
+        Bench.Test.create_indexed ~name:"Bits.create" ~args:[1;10;1000;10000;100000;1000000]
+          (fun len ->
+            Staged.stage
+              (fun () -> ignore (Bits.create len)));
+        Bench.Test.create_indexed ~name:"Bits.lnot_inplace" ~args:[1;10;1000;10000;100000;1000000]
+          (fun len ->
+            let b = Bits.create len in
+              Staged.stage
+               (fun () -> ignore (Bits.lnot_inplace b)));
+      ])

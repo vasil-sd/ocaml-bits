@@ -14,10 +14,18 @@ depends:
   "ocamlfind" {build}
   "ocamlbuild" {build}
   "topkg" {build & >= "0.9.0"}
+  "core" {test}
+  "core_bench" {test}
+  "qcheck" {test}
+  "bits" {test}
 ]
 depopts: []
 build:
 [[
   "ocaml" "pkg/pkg.ml" "build"
-          "--dev-pkg" "%{pinned}%"
+]]
+build-test:
+[[
+  "ocaml" "pkg/pkg.ml" "build" "--tests" "true"
+  "ocaml" "pkg/pkg.ml" "test"
 ]]

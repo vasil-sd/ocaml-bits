@@ -64,25 +64,16 @@
   (* special functions *)
   external bits_op : bits -> bits -> int -> bits = "cprim_bits_op"
   let op b1 b2 n = bits_op (copy b1) b2 n
-  let band b1 b2 = op b1 b2 0
-  let bor b1 b2 = op b1 b2 1
-  let bxor b1 b2 = op b1 b2 2
-  let ( &. ) = band
-  let ( |. ) = bor
-  let ( ^. ) = bxor
+  let ( land ) b1 b2 = op b1 b2 0
+  let ( lor ) b1 b2 = op b1 b2 1
+  let ( lxor ) b1 b2 = op b1 b2 2
 
-  let op_inplace b1 b2 n = bits_op b1 b2 n
-  let band_inplace b1 b2 = op_inplace b1 b2 0
-  let bor_inplace b1 b2 = op_inplace b1 b2 1
-  let bxor_inplace b1 b2 = op_inplace b1 b2 2
-  let ( &.! ) = band_inplace
-  let ( |.! ) = bor_inplace
-  let ( ^.! ) = bxor_inplace
+  let land_inplace b1 b2 = bits_op b1 b2 0
+  let lor_inplace b1 b2 = bits_op b1 b2 1
+  let lxor_inplace b1 b2 = bits_op b1 b2 2
 
-  external bnot_inplace : bits -> bits = "cprim_bits_not" [@@noalloc]
-  let bnot b = bnot_inplace (copy b)
-  let ( ~. ) = bnot
-  let ( ~.! ) = bnot_inplace
+  external lnot_inplace : bits -> bits = "cprim_bits_not" [@@noalloc]
+  let lnot b = lnot_inplace (copy b)
 
   external for_all_values : (int -> bool) -> bits -> bool -> bool = "cprim_bits_for_all_values_exn"
   external exists_for_values : (int -> bool) -> bits -> bool -> bool  = "cprim_bits_exists_for_values_exn"
