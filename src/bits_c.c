@@ -4,12 +4,7 @@
    %%NAME%% %%VERSION%%
   ---------------------------------------------------------------------------*/
 
-#include <caml/alloc.h>
-#include <caml/callback.h>
-#include <caml/fail.h>
-#include <caml/memory.h>
-#include <caml/misc.h>
-#include <caml/mlvalues.h>
+#include "bits_c.h"
 
 CAMLprim value cprim_bits_get_exn(value bits, value bito) {
   // {length : int; data : bytes}
