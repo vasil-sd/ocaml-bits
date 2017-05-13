@@ -52,6 +52,21 @@
                     let last_char = char_of_int ((int_of_char '0') + rest_bits) in
                     s ^ (String.make 1 last_char)
 
+  external for_all_values : (int -> bool) -> bits -> bool -> bool = "cprim_bits_for_all_values_exn"
+  external exists_for_values : (int -> bool) -> bits -> bool -> bool  = "cprim_bits_exists_for_values_exn"
+  external index_no_exn : bits -> bool -> int = "cprim_bits_index" [@@noalloc]
+  external rindex_no_exn : bits -> bool -> int = "cprim_bits_rindex" [@@noalloc]
+  let index b v = let idx = index_no_exn b v in if (idx >= 0) then idx else raise Not_found
+  let rindex b v = let idx = rindex_no_exn b v in if (idx >= 0) then idx else raise Not_found
+
+  let extend b ~amount =
+    if amount >= 0 then
+      let new_data = Bytes.extend b.data 0 ((amount + 7 - ((8 - (b.length land 7)) land 7)) lsr 3) in
+        let new_data_first_byte_offset = Bytes.length b.data in
+        Bytes.fill new_data new_data_first_byte_offset ((Bytes.length new_data ) - new_data_first_byte_offset) (char_of_int 0);
+        { length = b.length + amount; data = new_data }
+    else raise (Invalid_argument "Bits.extend")
+
   type t = bits
 
   (* TODO: equal is incorrect, because of arbitrary values of rest unused bits in last byte*)
@@ -74,10 +89,3 @@
 
   external lnot_inplace : bits -> bits = "cprim_bits_not" [@@noalloc]
   let lnot b = lnot_inplace (copy b)
-
-  external for_all_values : (int -> bool) -> bits -> bool -> bool = "cprim_bits_for_all_values_exn"
-  external exists_for_values : (int -> bool) -> bits -> bool -> bool  = "cprim_bits_exists_for_values_exn"
-  external index_no_exn : bits -> bool -> int = "cprim_bits_index" [@@noalloc]
-  external rindex_no_exn : bits -> bool -> int = "cprim_bits_rindex" [@@noalloc]
-  let index b v = let idx = index_no_exn b v in if (idx >= 0) then idx else raise Not_found
-  let rindex b v = let idx = rindex_no_exn b v in if (idx >= 0) then idx else raise Not_found

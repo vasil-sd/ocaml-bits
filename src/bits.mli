@@ -52,6 +52,11 @@ external rindex_no_exn : bits -> bool -> int = "cprim_bits_rindex" [@@noalloc]
 val index : bits -> bool -> int
 val rindex : bits -> bool -> int
 
+val extend : bits -> amount:int -> bits
+
+external for_all_values : (int -> bool) -> bits -> bool -> bool = "cprim_bits_for_all_values_exn"
+external exists_for_values : (int -> bool) -> bits -> bool -> bool  = "cprim_bits_exists_for_values_exn"
+
 type t = bits
 val equal : t -> t -> bool
 val compare : t -> t -> int
@@ -85,7 +90,7 @@ val compare : t -> t -> int
     = "caml_fill_bytes" [@@noalloc]
     *)
 
-(** Next bitwise operations will work only on bit vectors of the same length. 
+(** Next bitwise operations will work only on bit vectors of the same length.
     Each operation generates new bit vector as result.
     So arguments are immutable. *)
 
@@ -101,6 +106,3 @@ val land_inplace : bits -> bits -> bits
 val lor_inplace : bits -> bits -> bits
 val lxor_inplace : bits -> bits -> bits
 external lnot_inplace : bits -> bits = "cprim_bits_not" [@@noalloc]
-
-external for_all_values : (int -> bool) -> bits -> bool -> bool = "cprim_bits_for_all_values_exn"
-external exists_for_values : (int -> bool) -> bits -> bool -> bool  = "cprim_bits_exists_for_values_exn"
