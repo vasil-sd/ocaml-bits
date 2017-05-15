@@ -52,7 +52,7 @@ external rindex_no_exn : bits -> bool -> int = "cprim_bits_rindex" [@@noalloc]
 val index : bits -> bool -> int
 val rindex : bits -> bool -> int
 
-val extend : bits -> amount:int -> bits
+val extend : bits -> int -> int -> bits
 
 external for_all_values : (int -> bool) -> bits -> bool -> bool = "cprim_bits_for_all_values_exn"
 external exists_for_values : (int -> bool) -> bits -> bool -> bool  = "cprim_bits_exists_for_values_exn"

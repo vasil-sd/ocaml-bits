@@ -59,15 +59,15 @@
   let index b v = let idx = index_no_exn b v in if (idx >= 0) then idx else raise Not_found
   let rindex b v = let idx = rindex_no_exn b v in if (idx >= 0) then idx else raise Not_found
 
-  let extend b ~amount =
-    match amount with
-    | 0 -> b
-    | n when n > 0 ->
-       let new_data = Bytes.extend b.data 0 ((amount + 7 - ((8 - (b.length land 7)) land 7)) lsr 3) in
+  let extend b at_left at_right=
+    match at_left, at_right with
+    | 0, 0 -> b
+    | 0, n when n > 0 ->
+      let new_data = Bytes.extend b.data 0 ((n + 7 - ((8 - (b.length land 7)) land 7)) lsr 3) in
          let new_data_first_byte_offset = Bytes.length b.data in
            Bytes.fill new_data new_data_first_byte_offset ((Bytes.length new_data ) - new_data_first_byte_offset) (char_of_int 0);
-           { length = b.length + amount; data = new_data }
-    | _ -> raise (Invalid_argument "Bits.extend")
+           { length = b.length + n; data = new_data }
+    | _, _ -> raise (Invalid_argument "Bits.extend")
 
   type t = bits
 
