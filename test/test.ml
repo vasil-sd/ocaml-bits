@@ -32,4 +32,9 @@ let open Core.Std in
             let b = Bits.create len in
               Staged.stage
                (fun () -> ignore (Bits.lnot_inplace b)));
+        Bench.Test.create_indexed ~name:"Bits.lxor_inplace" ~args:[1;10;1000;10000;100000;1000000]
+          (fun len ->
+            let b,b1 = Bits.create len, Bits.create len in
+              Staged.stage
+               (fun () -> ignore (Bits.lxor_inplace b b1)));
       ])

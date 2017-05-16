@@ -59,7 +59,7 @@
   let index b v = let idx = index_no_exn b v in if (idx >= 0) then idx else raise Not_found
   let rindex b v = let idx = rindex_no_exn b v in if (idx >= 0) then idx else raise Not_found
 
-  let extend b at_left at_right=
+  let extend b at_left at_right =
     match at_left, at_right with
     | 0, 0 -> b
     | 0, n when n > 0 ->
@@ -79,7 +79,7 @@
                       Bytes.compare b1.data b2.data
 
   (* special functions *)
-  external bits_op : bits -> bits -> int -> bits = "cprim_bits_op"
+  external bits_op : bits -> bits -> (int [@untagged]) -> bits = "cprim_bits_op_byte" "cprim_bits_op" [@@noalloc]
   let op b1 b2 n = bits_op (copy b1) b2 n
   let ( land ) b1 b2 = op b1 b2 0
   let ( lor ) b1 b2 = op b1 b2 1

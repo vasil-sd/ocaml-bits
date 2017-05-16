@@ -37,18 +37,14 @@ CAMLprim value cprim_bits_set_exn(value bits, value bito, value v) {
   return Val_unit;
 }
 
-CAMLprim value cprim_bits_op(value b1, value b2, value op) {
+CAMLprim value cprim_bits_op(value b1, value b2, intnat opc) {
   // {length : int; data : bytes}
   int len1 = Int_val(Field(b1, 0));
   int len2 = Int_val(Field(b2, 0));
   value d1 = Field(b1, 1);
   value d2 = Field(b2, 1);
-  int opc = Int_val(op); // ops = 1 - and, 2 - or, 3 - xor
-  register int len = caml_string_length(d1);
-  if (len1 != len2) {
-    caml_invalid_argument("Bits.and/Bits.or/Bits.xor lengths of bitvectors are different");
-  }
-  len2 = len-1;
+  len1 = len1 <= len2 ? len1 : len2;
+  int len = len1 >> 3;
   #define FAST_ITERATE(len, d1, d2, op) \
     { \
       register unsigned char *p1=&(Byte_u(d1, 0)); \
@@ -62,14 +58,28 @@ CAMLprim value cprim_bits_op(value b1, value b2, value op) {
     case 0: FAST_ITERATE(len, d1, d2, &=); break;
     case 1: FAST_ITERATE(len, d1, d2, |=); break;
     case 2: FAST_ITERATE(len, d1, d2, ^=); break;
-    default: caml_invalid_argument("Bits.and/Bits.or/Bits.xor incorrect code for op: only [0 - and, 1 - or, 2 - xor] are permitted");
   }
   // set highest unused bits to zero
   len1 &= 0x7;
   if(len1) {
-    Byte_u(d1, len2) &= (1 << len1 ) - 1;
+    unsigned char byte1 = Byte_u(d1, len-1);
+    unsigned char byte2 = Byte_u(d2, len-1);
+    unsigned char byte1old = byte1;
+    switch(opc){
+      case 0: byte1 &= byte2; break;
+      case 1: byte1 |= byte2; break;
+      case 2: byte1 ^= byte2; break;
+    }
+    byte1old &= ~((1 << len1 ) - 1); // clear bits which are subject to change
+    byte1 &= (1 << len1 ) - 1; // clear bits that are need not be changed
+    byte1old |= byte1; // combine them
+    Byte_u(d1, len-1) = byte1old;
   }
   return b1;
+}
+
+CAMLprim value cprim_bits_op_byte(value b1, value b2, value op) {
+  return cprim_bits_op(b1, b2, Int_val(op));
 }
 
 CAMLprim value cprim_bits_not(value b) {
