@@ -106,3 +106,10 @@ val land_inplace : bits -> bits -> bits
 val lor_inplace : bits -> bits -> bits
 val lxor_inplace : bits -> bits -> bits
 external lnot_inplace : bits -> bits = "cprim_bits_not" [@@noalloc]
+
+external all_zeros : bits -> bool = "cprim_bits_all_zeros" [@@noalloc]
+external all_ones : bits -> bool = "cprim_bits_all_ones" [@@noalloc]
+
+(** subset a b - checks if a is subset of b in sense that all set bits in a
+    also set in b *)
+external subset : bits -> bits -> bool = "cprim_bits_subset" [@@noalloc]

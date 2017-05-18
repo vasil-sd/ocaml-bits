@@ -441,6 +441,126 @@ CAMLprim value cprim_bits_rindex(value b, value v) {
   return Val_int(-1);
 }
 
+CAMLprim value cprim_bits_all_zeros(value b) {
+  register int bit_len = Int_val(Field(b, 0));
+  register int len = bit_len >> 3;
+  register unsigned char *p = &Byte_u(Field(b, 1), 0);
+  bit_len &= 7;
+  for(register int _len = len>>3;_len;_len--, p+=8) if(*((uint64_t *)p) != (uint64_t)0) return Val_int(0);
+  if (len&0x4) if(*((uint32_t *)p) != (uint32_t)0) return Val_int(0); p+=4;
+  if (len&0x2) if(*((uint16_t *)p) != (uint16_t)0) return Val_int(0); p+=2;
+  if (len&0x1) if(*((uint8_t *)p) != (uint8_t)0) return Val_int(0); p++;
+  if(bit_len) {
+    if ((*p & ((1 << bit_len ) - 1)) != 0) return Val_int(0);
+  }
+  return Val_int(1);
+}
+
+CAMLprim value cprim_bits_all_ones(value b) {
+  register int bit_len = Int_val(Field(b, 0));
+  register int len = bit_len >> 3;
+  register unsigned char *p = &Byte_u(Field(b, 1), 0);
+  bit_len &= 7;
+  for(register int _len = len>>3;_len;_len--, p+=8) if(*((uint64_t *)p) != (uint64_t)0xFFFFFFFFFFFFFFFFULL) return Val_int(0);
+  if (len&0x4) if(*((uint32_t *)p) != (uint32_t)0xFFFFFFFF) return Val_int(0); p+=4;
+  if (len&0x2) if(*((uint16_t *)p) != (uint16_t)0xFFFF) return Val_int(0); p+=2;
+  if (len&0x1) if(*((uint8_t *)p) != (uint8_t)0xFF) return Val_int(0); p++;
+  if(bit_len) {
+    if ((*p & ((1 << bit_len ) - 1)) != (0xFF & ((1 << bit_len ) - 1))) return Val_int(0);
+  }
+  return Val_int(1);
+}
+
+CAMLprim value cprim_bits_subset(value b1, value b2) {
+  // {length : int; data : bytes}
+  int len1 = Int_val(Field(b1, 0));
+  int len2 = Int_val(Field(b2, 0));
+  value d1 = Field(b1, 1);
+  value d2 = Field(b2, 1);
+  int bitlen = len1 <= len2 ? len1 : len2;
+  int len = bitlen >> 3;
+  register unsigned char *p1=&(Byte_u(d1, 0));
+  register unsigned char *p2=&(Byte_u(d2, 0));
+  for(register int _len = len>>3;_len;_len--) {
+    register uint64_t v1 = *((uint64_t *)p1);
+    register uint64_t v2 = *((uint64_t *)p2);
+    if ( (v1 & v2) != v1 ) return Val_int(0);
+    p1+=8; p2+=8;
+  }
+  if (len&0x4) {
+    register uint32_t v1 = *((uint32_t *)p1);
+    register uint32_t v2 = *((uint32_t *)p2);
+    if ( (v1 & v2) != v1 ) return Val_int(0);
+    p1+=4; p2+=4;
+  }
+  if (len&0x2) {
+    register uint16_t v1 = *((uint16_t *)p1);
+    register uint16_t v2 = *((uint16_t *)p2);
+    if ( (v1 & v2) != v1 ) return Val_int(0);
+    p1+=2; p2+=2;
+  }
+  if (len&0x1) {
+    register uint8_t v1 = *((uint8_t *)p1);
+    register uint8_t v2 = *((uint8_t *)p2);
+    if ( (v1 & v2) != v1 ) return Val_int(0);
+    p1++; p2++;
+  }
+  // set highest unused bits to zero
+  bitlen &= 0x7;
+  if(bitlen) {
+    register unsigned char v1 = Byte_u(d1, len-1);
+    register unsigned char v2 = Byte_u(d2, len-1);
+    v1 &= (1 << bitlen ) - 1;
+    v2 &= (1 << bitlen ) - 1;
+    if ( (v1 & v2) != v1 ) return Val_int(0);
+  }
+  if(len1 != len2) {
+    // in case when bitvectors are not equal in lengths
+    // largest bitvector must have all zeros in higher bits
+    register unsigned char *p = len1 > len2 ? &(Byte_u(d1, len-1)) : &(Byte_u(d2, len-1));
+    int rest_bits = len1 > len2 ? len1 - len2 : len2 - len1;
+    if (bitlen) {
+      register unsigned char v = *p;
+      int mask = (1 << bitlen ) - 1;
+      if (rest_bits < 8 - bitlen) mask &= (1 << (bitlen + rest_bits)) - 1;
+      v &= ~mask;
+      if (v != 0) return Val_int(0);
+      p++;
+    }
+    rest_bits -= (8-bitlen);
+    if (rest_bits <= 0) return Val_int(1);
+    int len = rest_bits >> 3;
+    for(register int _len = len>>3;_len;_len--) {
+      register uint64_t v = *((uint64_t *)p);
+      if ( v != 0 ) return Val_int(0);
+      p+=8;
+    }
+    if (len&0x4) {
+      register uint32_t v = *((uint32_t *)p);
+      if ( v != 0 ) return Val_int(0);
+      p+=4;
+    }
+    if (len&0x2) {
+      register uint16_t v = *((uint16_t *)p);
+      if ( v != 0 ) return Val_int(0);
+      p+=2;
+    }
+    if (len&0x1) {
+      register uint8_t v = *((uint8_t *)p);
+      if ( v != 0 ) return Val_int(0);
+      p++;
+    }
+    // set highest unused bits to zero
+    rest_bits &= 0x7;
+    if(rest_bits) {
+      register unsigned char v = *p;
+      v &= (1 << bitlen ) - 1;
+      if ( v != 0 ) return Val_int(0);
+    }
+  }
+  return Val_int(1);
+}
+
 /*---------------------------------------------------------------------------
    Copyright (c) 2017 Vasil Diadov
 

@@ -96,3 +96,8 @@ let lxor_inplace b1 b2 = bits_op b1 b2 2
 
 external lnot_inplace : bits -> bits = "cprim_bits_not" [@@noalloc]
 let lnot b = lnot_inplace (copy b)
+
+external all_zeros : bits -> bool = "cprim_bits_all_zeros" [@@noalloc]
+external all_ones : bits -> bool = "cprim_bits_all_ones" [@@noalloc]
+
+external subset : bits -> bits -> bool = "cprim_bits_subset" [@@noalloc]
