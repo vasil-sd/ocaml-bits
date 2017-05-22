@@ -101,3 +101,5 @@ external all_zeros : bits -> bool = "cprim_bits_all_zeros" [@@noalloc]
 external all_ones : bits -> bool = "cprim_bits_all_ones" [@@noalloc]
 
 external subset : bits -> bits -> bool = "cprim_bits_subset" [@@noalloc]
+
+external fill : bits -> int -> int -> bool -> unit = "cprim_bits_fill_exn"

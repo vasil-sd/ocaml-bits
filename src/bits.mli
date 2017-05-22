@@ -56,6 +56,7 @@ val extend : bits -> int -> int -> bits
 
 external for_all_values : (int -> bool) -> bits -> bool -> bool = "cprim_bits_for_all_values_exn"
 external exists_for_values : (int -> bool) -> bits -> bool -> bool  = "cprim_bits_exists_for_values_exn"
+external fill : bits -> int -> int -> bool -> unit = "cprim_bits_fill_exn"
 
 type t = bits
 val equal : t -> t -> bool
@@ -66,7 +67,6 @@ val compare : t -> t -> int
   val sub : bytes -> int -> int -> bytes
   --val sub_string : bytes -> int -> int -> string
   val extend : bytes -> int -> int -> bytes
-  val fill : bytes -> int -> int -> char -> unit
   val blit : bytes -> int -> bytes -> int -> int -> unit
   --val blit_string : string -> int -> bytes -> int -> int -> unit
   val concat : bytes -> bytes list -> bytes

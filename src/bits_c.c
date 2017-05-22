@@ -62,8 +62,8 @@ CAMLprim value cprim_bits_op(value b1, value b2, intnat opc) {
   // set highest unused bits to zero
   len1 &= 0x7;
   if(len1) {
-    unsigned char byte1 = Byte_u(d1, len-1);
-    unsigned char byte2 = Byte_u(d2, len-1);
+    unsigned char byte1 = Byte_u(d1, len);
+    unsigned char byte2 = Byte_u(d2, len);
     unsigned char byte1old = byte1;
     switch(opc){
       case 0: byte1 &= byte2; break;
@@ -73,7 +73,7 @@ CAMLprim value cprim_bits_op(value b1, value b2, intnat opc) {
     byte1old &= ~((1 << len1 ) - 1); // clear bits which are subject to change
     byte1 &= (1 << len1 ) - 1; // clear bits that are need not be changed
     byte1old |= byte1; // combine them
-    Byte_u(d1, len-1) = byte1old;
+    Byte_u(d1, len) = byte1old;
   }
   return b1;
 }
@@ -447,9 +447,9 @@ CAMLprim value cprim_bits_all_zeros(value b) {
   register unsigned char *p = &Byte_u(Field(b, 1), 0);
   bit_len &= 7;
   for(register int _len = len>>3;_len;_len--, p+=8) if(*((uint64_t *)p) != (uint64_t)0) return Val_int(0);
-  if (len&0x4) if(*((uint32_t *)p) != (uint32_t)0) return Val_int(0); p+=4;
-  if (len&0x2) if(*((uint16_t *)p) != (uint16_t)0) return Val_int(0); p+=2;
-  if (len&0x1) if(*((uint8_t *)p) != (uint8_t)0) return Val_int(0); p++;
+  if (len&0x4) { if(*((uint32_t *)p) != (uint32_t)0) return Val_int(0); p+=4; }
+  if (len&0x2) { if(*((uint16_t *)p) != (uint16_t)0) return Val_int(0); p+=2; }
+  if (len&0x1) { if(*((uint8_t *)p) != (uint8_t)0) return Val_int(0); p++; }
   if(bit_len) {
     if ((*p & ((1 << bit_len ) - 1)) != 0) return Val_int(0);
   }
@@ -461,12 +461,12 @@ CAMLprim value cprim_bits_all_ones(value b) {
   register int len = bit_len >> 3;
   register unsigned char *p = &Byte_u(Field(b, 1), 0);
   bit_len &= 7;
-  for(register int _len = len>>3;_len;_len--, p+=8) if(*((uint64_t *)p) != (uint64_t)0xFFFFFFFFFFFFFFFFULL) return Val_int(0);
-  if (len&0x4) if(*((uint32_t *)p) != (uint32_t)0xFFFFFFFF) return Val_int(0); p+=4;
-  if (len&0x2) if(*((uint16_t *)p) != (uint16_t)0xFFFF) return Val_int(0); p+=2;
-  if (len&0x1) if(*((uint8_t *)p) != (uint8_t)0xFF) return Val_int(0); p++;
+  for(register int _len = len>>3;_len;_len--, p+=8) if(~(*((uint64_t *)p)) != (uint64_t)0) return Val_int(0);
+  if (len&0x4) { if(~(*((uint32_t *)p)) != (uint32_t)0) return Val_int(0); p+=4; }
+  if (len&0x2) { if((uint16_t)(~(*((uint16_t *)p))) != (uint16_t)0) return Val_int(0); p+=2; }
+  if (len&0x1) { if((uint8_t)(~(*((uint8_t *)p))) != (uint8_t)0) return Val_int(0);  p++; }
   if(bit_len) {
-    if ((*p & ((1 << bit_len ) - 1)) != (0xFF & ((1 << bit_len ) - 1))) return Val_int(0);
+    if ((~(*p) & ((1 << bit_len ) - 1)) != 0) return Val_int(0);
   }
   return Val_int(1);
 }
@@ -559,6 +559,55 @@ CAMLprim value cprim_bits_subset(value b1, value b2) {
     }
   }
   return Val_int(1);
+}
+
+CAMLprim value cprim_bits_fill_exn(value b, value vfrom, value vlen, value val) {
+  // {length : int; data : bytes}
+  int from = Int_val(vfrom);
+  int length = Int_val(vlen);
+  int bitlen = Int_val(Field(b, 0));
+  int v = Int_val(val);
+  if ((from + length > bitlen) || (from < 0) || (length < 0) ) { caml_invalid_argument("Bits.fill"); }
+  value d = Field(b, 1);
+  // [7..0] [7..0] .. [7..0] [7..0]
+  //    |                      |
+  //    \----------------------/
+  //    |---|              |---|
+  //     pre                post
+  //
+  //    pre = (8 - (from & 0x7)) & 0x7
+  //    post = (length - pre) & 0x7
+  //
+  int pre = (8 - (from & 0x7)) & 0x7;
+  int post = (length - pre) & 0x7;
+  length -= pre;
+
+  int off = (from + 7 ) >> 3;
+
+  int len = length >> 3;
+  register unsigned char *p = &(Byte_u(d, off));
+
+  if(pre){
+    unsigned char byte = *(p-1);
+    byte &= ((1 << (8 - pre) ) - 1);
+    if (v) { byte |= ~((1 << (8 - pre)) - 1); }
+    *(p-1) = byte;
+  }
+
+  if (v) {
+    for(; len; len--) *p++=0xFF;
+  } else {
+    for(; len; len--) *p++=0;
+  }
+
+  if(post) {
+    unsigned char byte = *p;
+    byte &= ~((1 << post ) - 1);
+    if (v) { byte |= ((1 << post ) - 1); }
+    *p = byte;
+  }
+
+  return Val_unit;
 }
 
 /*---------------------------------------------------------------------------
