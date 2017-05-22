@@ -461,8 +461,8 @@ CAMLprim value cprim_bits_all_ones(value b) {
   register int len = bit_len >> 3;
   register unsigned char *p = &Byte_u(Field(b, 1), 0);
   bit_len &= 7;
-  for(register int _len = len>>3;_len;_len--, p+=8) if(~(*((uint64_t *)p)) != (uint64_t)0) return Val_int(0);
-  if (len&0x4) { if(~(*((uint32_t *)p)) != (uint32_t)0) return Val_int(0); p+=4; }
+  for(register int _len = len>>3;_len;_len--, p+=8) if((uint64_t)(~(*((uint64_t *)p))) != (uint64_t)0) return Val_int(0);
+  if (len&0x4) { if((uint32_t)(~(*((uint32_t *)p))) != (uint32_t)0) return Val_int(0); p+=4; }
   if (len&0x2) { if((uint16_t)(~(*((uint16_t *)p))) != (uint16_t)0) return Val_int(0); p+=2; }
   if (len&0x1) { if((uint8_t)(~(*((uint8_t *)p))) != (uint8_t)0) return Val_int(0);  p++; }
   if(bit_len) {
