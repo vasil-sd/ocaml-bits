@@ -93,7 +93,8 @@ CAMLprim value cprim_bits_not(value b) {
   return b;
 }
 
-CAMLprim value cprim_bits_iteri_exn(value f, value b) {
+CAMLprim void cprim_bits_iteri_exn(value f, value b) {
+  CAMLparam2(f, b);
   register int bit_len = Int_val(Field(b, 0));
   register int len = bit_len >> 3;
   register unsigned char *p = &Byte_u(Field(b, 1), 0);
@@ -127,10 +128,11 @@ CAMLprim value cprim_bits_iteri_exn(value f, value b) {
       result = caml_callback2_exn(f, Val_int(i++), Val_int(byte&0x1)); byte >>= 1; CHECK_FOR_EXN(result);
     }
   }
-  return Val_unit;
+  CAMLreturn0;
 }
 
 CAMLprim value cprim_bits_mapi_exn(value f, value b) {
+  CAMLparam2(f,b);
   register int bit_len = Int_val(Field(b, 0));
   register int len = bit_len >> 3;
   register unsigned char *p = &Byte_u(Field(b, 1), 0);
@@ -161,10 +163,11 @@ CAMLprim value cprim_bits_mapi_exn(value f, value b) {
     }
     *p = (unsigned char)new_byte;
   }
-  return b;
+  CAMLreturn(b);
 }
 
-CAMLprim value cprim_bits_iteri_on_val_exn(value f, value b, value v) {
+CAMLprim void cprim_bits_iteri_on_val_exn(value f, value b, value v) {
+  CAMLparam3(f,b,v);
   register int bit_len = Int_val(Field(b, 0));
   register int len = bit_len >> 3;
   register unsigned char *p = &Byte_u(Field(b, 1), 0);
@@ -193,10 +196,11 @@ CAMLprim value cprim_bits_iteri_on_val_exn(value f, value b, value v) {
       byte >>= 1;
     }
   }
-  return Val_unit;
+  CAMLreturn0;
 }
 
 CAMLprim value cprim_bits_mapi_on_val_exn(value f, value b, value v) {
+  CAMLparam3(f,b,v);
   register int bit_len = Int_val(Field(b, 0));
   register int len = bit_len >> 3;
   register unsigned char *p = &Byte_u(Field(b, 1), 0);
@@ -244,11 +248,12 @@ CAMLprim value cprim_bits_mapi_on_val_exn(value f, value b, value v) {
     byte &= (1 << off) - 1;
     *p = (unsigned char) (byte);
   }
-  return b;
+  CAMLreturn(b);
 }
 
 
 CAMLprim value cprim_bits_for_all_values_exn(value f, value b, value v) {
+  CAMLparam3(f,b,v);
   register int bit_len = Int_val(Field(b, 0));
   register int len = bit_len >> 3;
   register unsigned char *p = &Byte_u(Field(b, 1), 0);
@@ -259,14 +264,14 @@ CAMLprim value cprim_bits_for_all_values_exn(value f, value b, value v) {
     register int byte = ~(val ^ (int)*p++);
     register value result;
 
-    if (byte&0x01) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) return Val_int(0);}
-    if (byte&0x02) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) return Val_int(0);}
-    if (byte&0x04) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) return Val_int(0);}
-    if (byte&0x08) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) return Val_int(0);}
-    if (byte&0x10) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) return Val_int(0);}
-    if (byte&0x20) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) return Val_int(0);}
-    if (byte&0x40) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) return Val_int(0);}
-    if (byte&0x80) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) return Val_int(0);}
+    if (byte&0x01) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) CAMLreturn(Val_int(0));}
+    if (byte&0x02) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) CAMLreturn(Val_int(0));}
+    if (byte&0x04) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) CAMLreturn(Val_int(0));}
+    if (byte&0x08) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) CAMLreturn(Val_int(0));}
+    if (byte&0x10) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) CAMLreturn(Val_int(0));}
+    if (byte&0x20) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) CAMLreturn(Val_int(0));}
+    if (byte&0x40) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) CAMLreturn(Val_int(0));}
+    if (byte&0x80) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (!Int_val(result)) CAMLreturn(Val_int(0));}
   }
   if(bit_len) {
     register int byte = ~(val ^ (int)*p);
@@ -275,10 +280,11 @@ CAMLprim value cprim_bits_for_all_values_exn(value f, value b, value v) {
       if (byte&0x1) { result = caml_callback_exn(f, Val_int(i++)); byte >>= 1; CHECK_FOR_EXN(result); if (!Int_val(result)) return Val_int(0);}
     }
   }
-  return Val_int(1);
+  CAMLreturn(Val_int(1));
 }
 
 CAMLprim value cprim_bits_exists_for_values_exn(value f, value b, value v) {
+  CAMLparam3(f,b,v);
   register int bit_len = Int_val(Field(b, 0));
   register int len = bit_len >> 3;
   register unsigned char *p = &Byte_u(Field(b, 1), 0);
@@ -289,14 +295,14 @@ CAMLprim value cprim_bits_exists_for_values_exn(value f, value b, value v) {
     register int byte = ~(val ^ (int)*p++);
     register value result;
 
-    if (byte&0x01) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) return Val_int(1);}
-    if (byte&0x02) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) return Val_int(1);}
-    if (byte&0x04) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) return Val_int(1);}
-    if (byte&0x08) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) return Val_int(1);}
-    if (byte&0x10) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) return Val_int(1);}
-    if (byte&0x20) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) return Val_int(1);}
-    if (byte&0x40) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) return Val_int(1);}
-    if (byte&0x80) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) return Val_int(1);}
+    if (byte&0x01) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) CAMLreturn(Val_int(1));}
+    if (byte&0x02) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) CAMLreturn(Val_int(1));}
+    if (byte&0x04) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) CAMLreturn(Val_int(1));}
+    if (byte&0x08) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) CAMLreturn(Val_int(1));}
+    if (byte&0x10) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) CAMLreturn(Val_int(1));}
+    if (byte&0x20) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) CAMLreturn(Val_int(1));}
+    if (byte&0x40) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) CAMLreturn(Val_int(1));}
+    if (byte&0x80) { result = caml_callback_exn(f, Val_int(i++)); CHECK_FOR_EXN(result); if (Int_val(result)) CAMLreturn(Val_int(1));}
   }
   if(bit_len) {
     register int byte = ~(val ^ (int)*p);
@@ -305,7 +311,7 @@ CAMLprim value cprim_bits_exists_for_values_exn(value f, value b, value v) {
       if (byte&0x1) { result = caml_callback_exn(f, Val_int(i++)); byte >>= 1; CHECK_FOR_EXN(result); if (Int_val(result)) return Val_int(1);}
     }
   }
-  return Val_int(0);
+  CAMLreturn(Val_int(0));
 }
 
 CAMLprim value cprim_bits_count_val(value b, value v) {

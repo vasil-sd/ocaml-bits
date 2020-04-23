@@ -20,7 +20,7 @@
    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
   ---------------------------------------------------------------------------*)
 
-let open Core.Std in
+let open Core in
   let open Core_bench.Std in
       Command.run (Bench.make_command [
         Bench.Test.create_indexed ~name:"Bits.create" ~args:[1;10;1000;10000;100000;1000000]
