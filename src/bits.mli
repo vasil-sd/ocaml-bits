@@ -50,7 +50,9 @@ val map : (bool -> bool) -> bits -> bits
 external index_no_exn : bits -> bool -> int = "cprim_bits_index" [@@noalloc]
 external rindex_no_exn : bits -> bool -> int = "cprim_bits_rindex" [@@noalloc]
 val index : bits -> bool -> int
+val index_opt : bits -> bool -> int option
 val rindex : bits -> bool -> int
+val rindex_opt : bits -> bool -> int option
 
 val extend : bits -> int -> int -> bits
 

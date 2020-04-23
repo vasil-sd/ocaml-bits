@@ -60,7 +60,9 @@ external index_no_exn : bits -> bool -> int = "cprim_bits_index" [@@noalloc]
 external rindex_no_exn : bits -> bool -> int = "cprim_bits_rindex" [@@noalloc]
 
 let index b v = let idx = index_no_exn b v in if (idx >= 0) then idx else raise Not_found
+let index_opt b v = let idx = index_no_exn b v in if (idx >= 0) then Some idx else None
 let rindex b v = let idx = rindex_no_exn b v in if (idx >= 0) then idx else raise Not_found
+let rindex_opt b v = let idx = rindex_no_exn b v in if (idx >= 0) then Some idx else None
 
 let extend b at_left at_right =
   match at_left, at_right with
